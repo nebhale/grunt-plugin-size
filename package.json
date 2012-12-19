@@ -19,7 +19,7 @@
 		"npm": "~1.1"
 	},
 
-	"main": "./src/size",
+	"main": "./tasks/size",
 	"scripts": {
 		"test": "grunt test"
 	},

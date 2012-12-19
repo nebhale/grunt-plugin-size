@@ -17,21 +17,21 @@
 /*jshint node:true*/
 'use strict';
 
-var buster = require('buster');
-var describe = buster.spec.describe;
-var expect = buster.assertions.expect;
-var it = buster.spec.it;
+var LengthCalculator = require('./support/length-calculator');
+var SizeBuilder = require('./support/size-builder');
+var SizeFormatter = require('./support/size-formatter');
 
-var grunt = require('grunt');
-var task = require('../tasks/size');
+module.exports = function(grunt) {
 
-describe('A Grunt size task', function() {
+	grunt.registerMultiTask('size', 'Display the size of files', function() {
+		var options = this.options({
+			human: true
+		});
 
-	it('is registered', function() {
-		this.spy(grunt, 'registerMultiTask');
+		var sizeFormatter = new SizeFormatter(options.human);
+		var lengthCalculator = new LengthCalculator();
+		var sizeBuilder = new SizeBuilder(sizeFormatter, lengthCalculator);
 
-		task(grunt);
-
-		expect(grunt.registerMultiTask).toHaveBeenCalled();
+		grunt.log.write(sizeBuilder.build(this.file.src));
 	});
-});
+};

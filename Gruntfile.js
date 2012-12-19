@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		locations: {
-			src: ['src/**/*.js'],
+			src: ['tasks/**/*.js'],
 			test: ['test/**/*.js']
 		},
 
