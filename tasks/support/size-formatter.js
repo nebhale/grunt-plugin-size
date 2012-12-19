@@ -17,21 +17,35 @@
 /*jshint node:true*/
 'use strict';
 
-var buster = require('buster');
-var describe = buster.spec.describe;
-var expect = buster.assertions.expect;
-var it = buster.spec.it;
+var sprint = require('sprint');
 
-var grunt = require('grunt');
-var task = require('../tasks/size');
+var gibi = Math.pow(2, 30);
+var mebi = Math.pow(2, 20);
+var kibi = Math.pow(2, 10);
 
-describe('A Grunt size task', function() {
+function SizeFormatter(human) {
+	this._human = human;
+}
 
-	it('is registered', function() {
-		this.spy(grunt, 'registerMultiTask');
+SizeFormatter.prototype.format = function(size) {
+	if(this._human) {
+		var candidate = size / gibi;
 
-		task(grunt);
+		if(candidate > 1) {
+			return sprint('%.1f GiB', candidate);
+		}
+		candidate = size / mebi;
+		if(candidate > 1) {
+			return sprint('%.1f MiB', candidate);
+		}
 
-		expect(grunt.registerMultiTask).toHaveBeenCalled();
-	});
-});
+		candidate = size / kibi;
+		if(candidate > 1) {
+			return sprint('%.1f KiB', candidate);
+		}
+	}
+
+	return sprint('%d B', size);
+};
+
+module.exports = SizeFormatter;

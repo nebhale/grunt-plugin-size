@@ -18,20 +18,30 @@
 'use strict';
 
 var buster = require('buster');
+var before = buster.spec.before;
 var describe = buster.spec.describe;
 var expect = buster.assertions.expect;
 var it = buster.spec.it;
 
-var grunt = require('grunt');
-var task = require('../tasks/size');
+var SizeBuilder = require('../../tasks/support/size-builder');
 
-describe('A Grunt size task', function() {
+describe('A SizeBuilder', function() {
+	var sizeFormatter = {
+	};
 
-	it('is registered', function() {
-		this.spy(grunt, 'registerMultiTask');
+	var lengthCalculator = {
+	};
 
-		task(grunt);
+	var sizeBuilder;
 
-		expect(grunt.registerMultiTask).toHaveBeenCalled();
+	before(function() {
+		sizeBuilder = new SizeBuilder(sizeFormatter, lengthCalculator);
+	});
+
+	it('builds a string with the names and sizes of files', function () {
+		sizeFormatter.format = this.stub().returns('length');
+		lengthCalculator.max = this.stub().returns(25);
+
+		expect(sizeBuilder.build(['test/support/alpha.txt', 'test/support/bravo.txt', 'test/support/charlie.txt'])).toEqual('test/support/alpha.txt                        length\ntest/support/bravo.txt                        length\ntest/support/charlie.txt                      length\n');
 	});
 });

@@ -18,20 +18,22 @@
 'use strict';
 
 var buster = require('buster');
+var before = buster.spec.before;
 var describe = buster.spec.describe;
 var expect = buster.assertions.expect;
 var it = buster.spec.it;
 
-var grunt = require('grunt');
-var task = require('../tasks/size');
+var LengthCalculator = require('../../tasks/support/length-calculator');
 
-describe('A Grunt size task', function() {
+describe('A LengthCalculator', function () {
 
-	it('is registered', function() {
-		this.spy(grunt, 'registerMultiTask');
+	var lengthCalculator;
 
-		task(grunt);
+	before(function () {
+		lengthCalculator = new LengthCalculator();
+	});
 
-		expect(grunt.registerMultiTask).toHaveBeenCalled();
+	it('determines the maximum length of a collection of strings', function () {
+		expect(lengthCalculator.max(['123', '12345', '1234'])).toBe(5);
 	});
 });

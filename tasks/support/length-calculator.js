@@ -17,21 +17,19 @@
 /*jshint node:true*/
 'use strict';
 
-var buster = require('buster');
-var describe = buster.spec.describe;
-var expect = buster.assertions.expect;
-var it = buster.spec.it;
+var _ = require('lodash');
 
-var grunt = require('grunt');
-var task = require('../tasks/size');
+function LengthCalculator() {}
 
-describe('A Grunt size task', function() {
+LengthCalculator.prototype.max = function(items) {
+	var max = 0;
 
-	it('is registered', function() {
-		this.spy(grunt, 'registerMultiTask');
-
-		task(grunt);
-
-		expect(grunt.registerMultiTask).toHaveBeenCalled();
+	_.each(items, function(item) {
+		max = Math.max(max, item.length);
 	});
-});
+
+	return max;
+};
+
+
+module.exports = LengthCalculator;
