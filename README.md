@@ -1,4 +1,4 @@
-# grunt-plugin-buster [![Build Status](https://secure.travis-ci.org/nebhale/grunt-plugin-buster.png?branch=master)](http://travis-ci.org/nebhale/grunt-plugin-buster)
+# grunt-plugin-size [![Build Status](https://secure.travis-ci.org/nebhale/grunt-plugin-size.png?branch=master)](http://travis-ci.org/nebhale/grunt-plugin-size)
 
 > Display the size of files
 
