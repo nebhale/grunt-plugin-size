@@ -32,6 +32,8 @@ module.exports = function(grunt) {
 		var lengthCalculator = new LengthCalculator();
 		var sizeBuilder = new SizeBuilder(sizeFormatter, lengthCalculator);
 
-		grunt.log.write(sizeBuilder.build(this.file.src));
+		this.files.forEach(function(file) {
+			grunt.log.write(sizeBuilder.build(file.src));
+		});
 	});
 };
